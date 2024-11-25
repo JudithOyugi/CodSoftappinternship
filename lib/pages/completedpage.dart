@@ -8,7 +8,7 @@ class Completedpage extends StatelessWidget {
   final int wrongAnswers;
   final int totalQuestions;
   final Function() onPlayAgain;
-   final List<Map<String, dynamic>> questions;
+  final List<Map<String, dynamic>> questions;
   final List<String?> userSelectedAnswers;
 
   const Completedpage({
@@ -17,352 +17,214 @@ class Completedpage extends StatelessWidget {
     required this.wrongAnswers,
     required this.totalQuestions,
     required this.onPlayAgain,
-     required this.questions,
+    required this.questions,
     required this.userSelectedAnswers,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     double percentage = (correctAnswers / totalQuestions) * 100;
     String scorePercentage = percentage.toStringAsFixed(0);
 
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 523,
-            width: 480,
-            child: Stack(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Color(0xFF4A63AC), Color(0xFFE6EAF5)],
+          ),
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+            child: Column(
               children: [
+                // Score Circle
                 Container(
-                  height: 340,
-                  width: 410,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF2A438C),
-                    borderRadius: BorderRadius.circular(10),
+                  height: 200,
+                  width: 200,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 15,
+                        spreadRadius: 5,
+                      ),
+                    ],
                   ),
                   child: Center(
-                    child: CircleAvatar(
-                      radius: 85,
-                      backgroundColor: Colors.white.withOpacity(.3),
-                      child: CircleAvatar(
-                        radius: 71,
-                        backgroundColor: Colors.white.withOpacity(.4),
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: Colors.white,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const Text("Your Score",
-                                    style: TextStyle(
-                                      color: Color(0xFF2A438C),
-                                      fontSize: 20,
-                                    )),
-                                RichText(
-                                  text: TextSpan(
-                                      text: scorePercentage,
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFF2A438C),
-                                      ),
-                                      children: const [
-                                        TextSpan(
-                                          text: "pt",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFF2A438C),
-                                          ),
-                                        )
-                                      ]),
-                                ),
-                              ],
-                            ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "$scorePercentage%",
+                          style: const TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF4A63AC),
                           ),
                         ),
-                      ),
+                        Text(
+                          "Score",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: const Color(0xFF4A63AC).withOpacity(0.8),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 60,
-                  left: 22,
-                  right: 18,
-                  child: Container(
-                    height: 190,
-                    width: 350,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 5,
-                              spreadRadius: 3,
-                              color: const Color(0xFF2A438C).withOpacity(.7),
-                              offset: const Offset(0, 1))
-                        ]),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Center(
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            height: 15,
-                                            width: 15,
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xFF2A438C)),
-                                          ),
-                                          Text(
-                                            "$percentage%",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color: Color(0xFF2A438C)),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    const Text("Completed"),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Center(
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            height: 15,
-                                            width: 15,
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xFF2A438C)),
-                                          ),
-                                          Text(
-                                            "$totalQuestions",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color: Color(0xFF2A438C)),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    const Text("Total Questions"),
-                                  ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 25,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Center(
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            height: 15,
-                                            width: 15,
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.green),
-                                          ),
-                                          Text(
-                                            "$correctAnswers",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color: Colors.green),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    const Text("Correct"),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 48.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Center(
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              height: 15,
-                                              width: 15,
-                                              decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.red),
-                                            ),
-                                            Text(
-                                              "$wrongAnswers",
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 20,
-                                                  color: Colors.red),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      const Text("Wrong"),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+
+                const SizedBox(height: 40),
+
+                // Stats Card
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 10,
+                        spreadRadius: 2,
                       ),
-                    ),
+                    ],
                   ),
+                  child: Column(
+                    children: [
+                      _buildStatRow(
+                          "Total Questions", totalQuestions.toString()),
+                      const Divider(height: 30),
+                      _buildStatRow(
+                          "Correct Answers", correctAnswers.toString(),
+                          color: Colors.green),
+                      const SizedBox(height: 15),
+                      _buildStatRow("Wrong Answers", wrongAnswers.toString(),
+                          color: Colors.red),
+                    ],
+                  ),
+                ),
+
+                const Spacer(),
+
+                // Action Buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildActionButton(
+                      icon: Icons.refresh,
+                      label: "Play Again",
+                      onTap: () {
+                        onPlayAgain();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Homepage()),
+                        );
+                      },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.visibility,
+                      label: "Review Answers",
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Reviewanswerspage(
+                              questions: questions,
+                              userSelectedAnswers: userSelectedAnswers,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    _buildActionButton(
+                      icon: Icons.home,
+                      label: "Home",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Intropage()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 7),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          onPlayAgain();
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Homepage(),
-                              ));
-                              
-                        },
-                        child: const CircleAvatar(
-                            backgroundColor: Color(
-                              (0xFF2A438C),
-                            ),
-                            radius: 35,
-                            child: Center(
-                              child: Icon(
-                                Icons.refresh,
-                                size: 35,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Text(
-                        "Play Again",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                   Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  Reviewanswerspage(questions: questions,
-                                userSelectedAnswers: userSelectedAnswers,),
-                              ));
-                        },
-                        child: const CircleAvatar(
-                            backgroundColor: Color.fromARGB(255, 42, 122, 140),
-                            radius: 35,
-                            child: Center(
-                              child: Icon(
-                                Icons.visibility_rounded,
-                                size: 35,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Text(
-                        "Review Answer",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 29),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const Intropage(),
-                              ));
-                        },
-                        child: const CircleAvatar(
-                            backgroundColor: Color.fromARGB(255, 164, 86, 164),
-                            radius: 35,
-                            child: Center(
-                              child: Icon(
-                                Icons.home,
-                                size: 35,
-                                color: Colors.white,
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Text(
-                        "Home",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget _buildStatRow(String label, String value, {Color? color}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 16,
+            color: const Color(0xFF4A63AC).withOpacity(0.8),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: color ?? const Color(0xFF4A63AC),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: const BoxDecoration(
+              color: Color(0xFF4A63AC),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 8,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: Icon(
+              icon,
+              size: 32,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFF4A63AC),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
     );
   }
 }
